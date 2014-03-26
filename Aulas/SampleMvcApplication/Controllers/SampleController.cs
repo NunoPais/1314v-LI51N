@@ -8,8 +8,14 @@ using System.Web.Routing;
 
 namespace SampleMvcApplication.Controllers
 {
+
+    
     public class FooX
     {
+        public override string ToString()
+        {
+            return "x = " + x + " - foo = " + foo;
+        }
 
         public FooX()
         {
@@ -24,13 +30,47 @@ namespace SampleMvcApplication.Controllers
         public int x { get; set; }
     }
 
+    public class MyActionResult : ActionResult
+    {
+        public override void ExecuteResult(ControllerContext context)
+        {
+            HttpResponseBase rsp = context.RequestContext.HttpContext.Response;
+            rsp.ContentType = "text/plain";
+            rsp.Write("My action result execution");
+
+
+        }
+
+        public override string ToString()
+        {
+            return "MyActionResult";
+        }
+    }
+
+
     public class SampleController : Controller {
 
-        public String SayHello(FooX fx)
+
+        public ActionResult SayHello(FooX fx)
         {
-            Response.ContentType = "image/gif";
-            return "Hello SLB " + fx.foo + " " + fx.x;
+            //Response.ContentType = "text/plain";
+            //return new ContentResult { Content = "Content result execution" };
+            //return new JsonResult { Data = fx, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+            return View((object)"ABC");
         }
+
+
+        
+        public String SayHelloPost(FooX fx)
+        {
+            Response.ContentType = "text/plain";
+
+
+            return "Hello SLB o maior " + fx.foo + " " + fx.x;
+        }
+
+
         
     }
 }
