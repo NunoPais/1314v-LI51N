@@ -1,0 +1,23 @@
+﻿<table>
+    <thead>
+        <caption>Client Cookies</caption>
+
+        <tr>
+            <th>CookieName</th>
+            <th>CookieValue</th>
+        </tr>
+    </thead>
+
+
+    @foreach(String cookieName in Request.Cookies.AllKeys)
+    {
+            HttpCookie cookie = Request.Cookies[cookieName];
+
+            <tr>
+                <th>@cookie.Name</th>
+                <th>@cookie.Value</th>
+            </tr>
+    }
+
+</table>
+
